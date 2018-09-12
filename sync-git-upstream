@@ -1,8 +1,4 @@
-#!/bin/bash -e
-
-export
-
-git remote -v
+#!/bin/bash
 
 if [[ -z "$1" ]]
 then
