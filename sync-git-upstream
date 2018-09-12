@@ -4,21 +4,11 @@ export
 
 git remote -v
 
-if [[ -z "$SSH_DEPLOY_PRIVATE_KEY" ]]
-then
-  echo "SSH_DEPLOY_PRIVATE_KEY must be set."
-  exit 1
-fi
-
 if [[ -z "$1" ]]
 then
   echo "An upstream must be passed as the first parameter."
   exit 1
 fi
-
-mkdir -p ~/.ssh
-echo $SSH_DEPLOY_PRIVATE_KEY > ~/.ssh/id_rsa
-chmod 0600 ~/.ssh/id_rsa
 
 git remote add upstream $1
 git fetch upstream --tags
