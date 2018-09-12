@@ -1,0 +1,25 @@
+#!/bin/bash -e
+
+export
+
+git remote -v
+
+if [[ -z "$SSH_DEPLOY_PRIVATE_KEY" ]]
+then
+  echo "SSH_DEPLOY_PRIVATE_KEY must be set."
+  exit 1
+fi
+
+if [[ -z "$UPSTREAM_GIT_URL" ]]
+then
+  echo "UPSTREAM_GIT_URL must be set."
+  exit 1
+fi
+
+mkdir -p ~/.ssh
+echo $SSH_DEPLOY_PRIVATE_KEY > ~/.ssh/id_rsa
+chmod 0600 ~/.ssh/id_rsa
+
+git remote add upstream $UPSTREAM_GIT_URL
+git fetch upstream --tags
+git push origin --tags
