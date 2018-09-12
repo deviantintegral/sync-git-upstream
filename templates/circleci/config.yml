@@ -4,19 +4,25 @@ jobs:
     docker:
       - image: andrewberry/sync-git-upstream:latest
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SO:ME:SSH:KEY:FINGER:PRINT"
       - checkout
-      - run: sync-git-mirror
-        
+      - run: sync-git-upstream https://github.com/org/repo.git
+
 workflows:
   version: 2
+  build_workflow:
+    jobs:
+      - build
+
   nightly:
-  triggers:
-    - schedule:
-        cron: "0 1 * * *"
-        filters:
-          branches:
-            only:
-              - patched
-  build:
+    triggers:
+      - schedule:
+          cron: "0 1 * * *"
+          filters:
+            branches:
+              only:
+                - patched
     jobs:
       - build
